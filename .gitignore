@@ -1,7 +1,8 @@
 .DS_Store
 __pycache__/
 .pytest_cache/
+.beads/
+.orchestration-agents/
 .orchestration-audit/
 contractor-packets/
 contractor-returns/
-
