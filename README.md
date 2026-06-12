@@ -14,6 +14,9 @@ To navigate this repository, you should understand the primary components of our
 For a deeper breakdown of the project architecture, terminology, and lifecycle
 rules, see the [Project Guide](docs/project-guide.md).
 
+Published Pages site:
+<https://gprocunier.github.io/hello-world-contractor-demo/>
+
 ## Run Locally
 
 Serving the files via a local server rather than opening the HTML file directly
@@ -50,4 +53,3 @@ This demo application is kept intentionally simple to allow easy inspection of t
 4. **Outside Contractors** implement their assignments in isolated patch branches.
 5. **Codex** evaluates the contractor returns and merges accepted patch branches into `main`.
 6. **GitHub Pages** publishes the final integrated site.
-
