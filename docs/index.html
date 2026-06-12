@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello World Contractor Demo</title>
+    <link rel="stylesheet" href="pages.css">
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a href="./" class="site-title" aria-label="Hello World Contractor Demo home">
+          <span class="site-title-mark" aria-hidden="true">&gt;</span>
+          hello-world
+        </a>
+        <nav aria-label="Primary">
+          <ul class="nav-list" role="list">
+            <li><a href="#workflow">Workflow</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#contractors">Contractors</a></li>
+            <li><a href="https://github.com/gprocunier/hello-world-contractor-demo" class="nav-external" aria-label="View source on GitHub">Repository</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="shell">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Codex orchestration sample</p>
+        <h1 id="hero-title">Hello, contractor workflow.</h1>
+        <p class="lede">
+          A minimal static project that demonstrates how Codex plans work,
+          dispatches bounded tasks to outside model contractors through Beads,
+          and integrates their output into a published result.
+        </p>
+      </section>
+
+      <section id="workflow" class="content-section" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">Workflow</h2>
+        <p class="section-intro">
+          Every change follows a four-step lifecycle managed by Codex as the
+          principal architect and integrator.
+        </p>
+        <ol class="steps" role="list">
+          <li class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <div class="step-body">
+              <h3>Codex creates the baseline project</h3>
+              <p>
+                Architecture, static app, validation script, CI, and repo
+                instructions are committed to <code>main</code>.
+              </p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <div class="step-body">
+              <h3>Antigravity documents the project on a patch branch</h3>
+              <p>
+                Google Antigravity receives a contractor packet and writes the
+                project guide on <code>agy/docs</code>.
+              </p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <div class="step-body">
+              <h3>Claude Code creates the GitHub Pages experience</h3>
+              <p>
+                Claude Code receives its own packet and builds the public
+                documentation site on <code>claude/pages</code>.
+              </p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">4</span>
+            <div class="step-body">
+              <h3>Codex validates, reviews, merges, and publishes</h3>
+              <p>
+                Contractor returns are evaluated against acceptance criteria.
+                Accepted branches merge to <code>main</code> and GitHub Pages
+                goes live.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="architecture" class="content-section" aria-labelledby="arch-title">
+        <h2 id="arch-title">Architecture</h2>
+        <p class="section-intro">
+          The project is dependency-free: standard HTML and CSS for the app,
+          built-in Python for validation, and GitHub Actions for CI.
+        </p>
+
+        <div class="file-tree" role="group" aria-label="Repository file structure">
+          <h3>Repository structure</h3>
+          <pre><code>hello-world-contractor-demo/
+&#9500;&#9472;&#9472; .github/workflows/   CI validation
+&#9500;&#9472;&#9472; docs/                GitHub Pages site
+&#9474;   &#9500;&#9472;&#9472; index.html       This page
+&#9474;   &#9492;&#9472;&#9472; pages.css        Page styles
+&#9500;&#9472;&#9472; scripts/
+&#9474;   &#9492;&#9472;&#9472; check_site.py    Static validation
+&#9500;&#9472;&#9472; index.html           Baseline app
+&#9500;&#9472;&#9472; styles.css           App styles
+&#9500;&#9472;&#9472; README.md            Project overview
+&#9492;&#9472;&#9472; LICENSE              MIT</code></pre>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <h3>Beads</h3>
+            <p>
+              A task-tracking system that models the work graph as a DAG of
+              dependencies. Beads records contractor dispatch, return evidence,
+              and acceptance decisions.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Contractor packets</h3>
+            <p>
+              JSON-formatted prompts containing context, allowed file paths, a
+              job-description label, and acceptance criteria. Each packet scopes
+              exactly one bounded assignment.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Patch branches</h3>
+            <p>
+              Contractors work on dedicated branches
+              (<code>agy/docs</code>, <code>claude/pages</code>) and may only
+              edit their assigned paths. No direct pushes to
+              <code>main</code>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Validation</h3>
+            <p>
+              <code>python3 scripts/check_site.py</code> runs locally and in CI
+              to verify structural elements, stylesheet links, content
+              requirements, and absence of placeholder markers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contractors" class="content-section" aria-labelledby="contractor-title">
+        <h2 id="contractor-title">Contractor model</h2>
+        <p class="section-intro">
+          Outside model contractors operate under strict boundaries that
+          guarantee security, quality control, and codebase integrity.
+        </p>
+
+        <div class="boundary-rules">
+          <div class="rule">
+            <h3>Branch isolation</h3>
+            <p>
+              All contractor work happens on designated patch branches.
+              Contractors never write directly to <code>main</code>.
+            </p>
+          </div>
+          <div class="rule">
+            <h3>Path restrictions</h3>
+            <p>
+              Each Bead specifies <code>allowed_paths</code>.
+              Contractors may only create or edit files within that list.
+            </p>
+          </div>
+          <div class="rule">
+            <h3>Evaluation gate</h3>
+            <p>
+              Codex evaluates every contractor return against the Bead
+              acceptance criteria before merging. Rejected work triggers a
+              repair cycle.
+            </p>
+          </div>
+          <div class="rule">
+            <h3>No secrets or destructive commands</h3>
+            <p>
+              Contractors must not access credentials, rotate secrets, force-push,
+              delete branches, or run destructive operations.
+            </p>
+          </div>
+        </div>
+
+        <h3>Lifecycle</h3>
+        <ol class="lifecycle" role="list">
+          <li>Codex defines a Bead task with acceptance criteria</li>
+          <li>Codex compiles and dispatches a handoff packet</li>
+          <li>Contractor implements changes on the assigned patch branch</li>
+          <li>Contractor runs local validation and submits a return</li>
+          <li>Codex evaluates the return against criteria</li>
+          <li>Accepted branches merge to <code>main</code>; rejected work is repaired</li>
+        </ol>
+      </section>
+
+      <section class="content-section cta-section" aria-labelledby="cta-title">
+        <h2 id="cta-title">Get started</h2>
+        <p class="section-intro">
+          Clone the repository and run the validation script to verify the
+          baseline.
+        </p>
+        <pre class="code-block"><code>git clone https://github.com/gprocunier/hello-world-contractor-demo.git
+cd hello-world-contractor-demo
+python3 scripts/check_site.py
+python3 -m http.server 8000</code></pre>
+        <p>
+          Then visit
+          <a href="http://localhost:8000">http://localhost:8000</a>
+          to see the baseline app.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <p>
+          <a href="https://github.com/gprocunier/hello-world-contractor-demo">gprocunier/hello-world-contractor-demo</a>
+        </p>
+        <p class="footer-license">MIT License</p>
+      </div>
+    </footer>
+  </body>
+</html>
