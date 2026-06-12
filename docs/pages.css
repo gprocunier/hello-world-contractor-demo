@@ -146,7 +146,6 @@ h1 {
   margin: 0 0 var(--space-lg);
   font-size: clamp(2.25rem, 6vw, 4rem);
   line-height: 1;
-  letter-spacing: -0.02em;
 }
 
 .lede {
@@ -166,7 +165,6 @@ h1 {
 h2 {
   margin: 0 0 var(--space-xs);
   font-size: 1.6rem;
-  letter-spacing: -0.01em;
 }
 
 h3 {

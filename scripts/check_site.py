@@ -8,7 +8,6 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / "index.html"
 
 
 class SiteParser(HTMLParser):
@@ -45,24 +44,44 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(message)
 
 
-def main() -> None:
-    require(INDEX.exists(), "index.html is missing")
+def parse_html(path: Path) -> tuple[SiteParser, str, str]:
+    require(path.exists(), f"{path.relative_to(ROOT)} is missing")
     parser = SiteParser()
-    html = INDEX.read_text(encoding="utf-8")
+    html = path.read_text(encoding="utf-8")
     parser.feed(html)
+    return parser, html, " ".join(parser.text_parts)
 
+
+def validate_root_page() -> None:
+    parser, html, body = parse_html(ROOT / "index.html")
     title = " ".join(parser.title_parts)
-    body = " ".join(parser.text_parts)
 
-    require(title == "Hello World Contractor Demo", "unexpected page title")
-    require("styles.css" in parser.stylesheets, "styles.css is not linked")
-    require((ROOT / "styles.css").exists(), "styles.css is missing")
-    require("Hello, contractor workflow." in body, "hero heading is missing")
-    require("Antigravity documents the project" in body, "Antigravity workflow text is missing")
-    require("Claude Code creates the GitHub Pages experience" in body, "Claude workflow text is missing")
+    require(title == "Hello World Contractor Demo", "unexpected root page title")
+    require("styles.css" in parser.stylesheets, "root styles.css is not linked")
+    require((ROOT / "styles.css").exists(), "root styles.css is missing")
+    require("Hello, contractor workflow." in body, "root hero heading is missing")
+    require("Antigravity documents the project" in body, "root Antigravity workflow text is missing")
+    require("Claude Code creates the GitHub Pages experience" in body, "root Claude workflow text is missing")
     require("TODO" not in html and "PLACEHOLDER" not in html, "placeholder text remains")
+
+
+def validate_pages_site() -> None:
+    parser, html, body = parse_html(ROOT / "docs" / "index.html")
+    title = " ".join(parser.title_parts)
+
+    require(title == "Hello World Contractor Demo", "unexpected Pages title")
+    require("pages.css" in parser.stylesheets, "docs/pages.css is not linked")
+    require((ROOT / "docs" / "pages.css").exists(), "docs/pages.css is missing")
+    require("Workflow" in body, "Pages workflow section is missing")
+    require("Contractor model" in body, "Pages contractor model section is missing")
+    require("gprocunier/hello-world-contractor-demo" in body, "Pages repository link text is missing")
+    require("TODO" not in html and "PLACEHOLDER" not in html, "placeholder text remains")
+
+
+def main() -> None:
+    validate_root_page()
+    validate_pages_site()
 
 
 if __name__ == "__main__":
     main()
-

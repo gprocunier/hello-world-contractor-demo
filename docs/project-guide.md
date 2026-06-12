@@ -1,22 +1,19 @@
 # Hello World Contractor Demo: Project Guide
 
-This guide describes the architecture, key concepts, and operational workflows of the hello-world contractor demo.
-
----
+This guide describes the architecture, key concepts, and operational workflows
+of the hello-world contractor demo.
 
 ## 1. Key Concepts
 
 To understand the lifecycle of tasks in this repository, we define the following core terms on first use:
 
-*   **Codex**: The agentic AI orchestration system (developed by Google DeepMind) that acts as the principal architect, project manager, and integrator. Codex plans the work, writes the baseline, dispatches tasks, and evaluates returns.
-*   **Beads (`bd`)**: A lightweight task tracking and durable state management system used by Codex to model project dependencies, record task status, and log contractor dispatch and return evidence.
-*   **Beads Task Graph**: A directed acyclic graph (DAG) of project tasks managed in Beads, showing how implementation, documentation, and publishing tasks depend on one another.
-*   **Contractor Handoff Packet**: A JSON-formatted prompt containing context, allowed file paths, a job description, and acceptance criteria compiled by Codex to brief an external contractor tool.
-*   **Outside Model Contractor**: An autonomous agent (such as Google Antigravity or Claude Code) invoked via specific tool commands (e.g., `agy -p` or `claude -p`) to complete a specific task in isolation.
-*   **Patch Branch**: A dedicated Git branch (e.g., `agy/docs` or `claude/pages`) assigned to an outside contractor. Contractors are restricted to editing specific allowed paths on their patch branches.
-*   **Validation Checkpoint**: An automated check run locally and during CI to ensure the repository remains in a valid, deployable state prior to merging code changes.
-
----
+- **Codex**: the AI coding agent acting as architect, project manager, integrator, and final reviewer.
+- **Beads (`bd`)**: lightweight task tracking and durable state used to model project dependencies, record task status, and log contractor dispatch and return evidence.
+- **Beads task graph**: a directed graph of project tasks showing how implementation, documentation, and publishing work depend on one another.
+- **Contractor handoff packet**: a bounded prompt containing context, allowed file paths, a job description, and acceptance criteria for an external contractor tool.
+- **Outside model contractor**: an external model tool, such as Google Antigravity or Claude Code, invoked with a specific assignment.
+- **Patch branch**: a dedicated Git branch, such as `agy/docs` or `claude/pages`, where a contractor works inside assigned file boundaries.
+- **Validation checkpoint**: an automated check run locally and in CI before merge or publish.
 
 ## 2. Directory Structure and Architecture
 
@@ -24,8 +21,10 @@ The repository is designed to be dependency-free, relying on standard browser te
 
 ```
 ├── .github/              # CI/CD configuration (GitHub Actions workflows)
-├── docs/                 # Documentation directory
-│   └── project-guide.md  # This document (detailed architecture and workflow guide)
+├── docs/                 # GitHub Pages and documentation
+│   ├── index.html        # Published Pages entry point
+│   ├── pages.css         # Published Pages styles
+│   └── project-guide.md  # This architecture and workflow guide
 ├── scripts/              # Validation and check scripts
 │   └── check_site.py     # Static validation checker
 ├── index.html            # Main application static landing page
@@ -36,11 +35,9 @@ The repository is designed to be dependency-free, relying on standard browser te
 └── README.md             # Project overview and entry-point documentation
 ```
 
-*   **[index.html](file:///home/d00d/codex/hello-world-contractor-demo-agy/index.html)**: The application entry point. It contains simple semantic HTML to describe the project and workflow.
-*   **[styles.css](file:///home/d00d/codex/hello-world-contractor-demo-agy/styles.css)**: Provides premium layout and styling using modern CSS practices.
-*   **[scripts/check_site.py](file:///home/d00d/codex/hello-world-contractor-demo-agy/scripts/check_site.py)**: A Python script that parses the HTML using standard libraries to verify layout elements and content requirements without introducing external pip dependencies.
-
----
+- [index.html](../index.html): the application entry point.
+- [styles.css](../styles.css): styling for the root landing page.
+- [scripts/check_site.py](../scripts/check_site.py): a dependency-free Python validator for the root page and GitHub Pages entry point.
 
 ## 3. Local Development Workflows
 
@@ -62,7 +59,9 @@ http://localhost:8000
 
 ### Validating Project Correctness
 
-Before committing changes, submitting a contractor return, or merging code, you must execute the validation checkpoint. This ensures that no structural tags are broken, the CSS is correctly linked, required hero text is present, and no unresolved placeholder markers (like "TODO" or "PLACEHOLDER") remain.
+Before committing changes, submitting a contractor return, or merging code, run
+the validation checkpoint. This ensures that structural tags are parseable, CSS
+is linked, required text is present, and unresolved work markers are absent.
 
 Execute the following script from the repository root directory:
 
@@ -71,8 +70,6 @@ python3 scripts/check_site.py
 ```
 
 If the script exits with no output, the validation succeeded. If it fails, it prints a specific error message and exits with a non-zero code.
-
----
 
 ## 4. Bounded Contractor Lifecycle
 
@@ -92,17 +89,16 @@ graph TD
 
 ### Contractor Boundary Rules
 
-1.  **Branch Isolation**: Contractors must never write directly to `main`. All development happens on designated patch branches (`agy/docs` or `claude/pages`).
-2.  **Path Restrictions**: Contractors are permitted to edit only the files explicitly listed in their Bead metadata's `allowed_paths`. For example, Google Antigravity is restricted to `README.md` and `docs/project-guide.md`.
-3.  **Transient File Hygiene**: Do not commit local Beads databases, raw contractor packets, contractor returns, or transient orchestration audit files. These files pollute version history and can accidentally expose internal system metadata.
-4.  **No Secrets or Destructive Commands**: Contractors must never attempt to access, generate, or rotate secrets, nor run destructive command flags.
-
----
+1. **Branch isolation**: contractors must never write directly to `main`. All development happens on designated patch branches.
+2. **Path restrictions**: contractors may edit only files explicitly listed in their Bead metadata's `allowed_paths`.
+3. **Transient file hygiene**: do not commit local Beads databases, raw contractor packets, contractor returns, or transient orchestration audit files.
+4. **No secrets or destructive commands**: contractors must never attempt to access, generate, or rotate secrets, nor run destructive command flags.
 
 ## 5. Troubleshooting and FAQ
 
-### What happens if validation fails with "placeholder text remains"?
-Ensure you have removed all literal strings containing `TODO` or `PLACEHOLDER` from your code and documentation. The validation parser checks all file contents case-sensitively.
+### What happens if validation reports an unresolved marker?
+Remove unfinished work markers from committed code and documentation, then run
+`python3 scripts/check_site.py` again.
 
 ### Why is direct pushing to main disabled?
 To prevent conflicting changes and ensure all contractor code is validated and peer-reviewed by Codex before integration, branch protection rules restrict commits to designated patch branches only.
